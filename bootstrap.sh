@@ -16,8 +16,6 @@ addpkgs="
 gcc
 make
 vim
-lxc
-lxc-templates
 "
 
 if [[ -n "$(echo ${addpkgs})" ]]; then

@@ -9,6 +9,10 @@ set -x
 
 # Do some changes ...
 
+vnet_root=/opt/axsh/openvnet
+PATH=${vnet_root}/ruby/bin:${PATH}
+vnmgr=172.16.9.10
+
 cat > /etc/yum.repos.d/openvnet-third-party.repo <<EOF
 [openvnet-third-party]
 name=OpenVNet Third Party
@@ -35,23 +39,28 @@ ONBOOT=yes
 HOTPLUG=no
 EOF
 
-cat > /etc/sysconfig/network-scripts/ifcfg-br0 <<EOF
-DEVICE=br0
-TYPE=OVSBridge
-DEVICETYPE=ovs
-ONBOOT=yes
-BOOTPROTO=static
-IPADDR=10.100.0.2
-NETMASK=255.255.255.0
-OVS_EXTRA="
- set bridge     \${DEVICE} protocols=OpenFlow10,OpenFlow12,OpenFlow13 --
- set bridge     \${DEVICE} other_config:disable-in-band=true --
- set bridge     \${DEVICE} other-config:datapath-id=0000aaaaaaaaaaaa --
- set bridge     \${DEVICE} other-config:hwaddr=02:01:00:00:00:01 --
- set-fail-mode  \${DEVICE} standalone --
- set-controller \${DEVICE} tcp:127.0.0.1:6633
-"
+rpm -Uvh http://dlc.wakame.axsh.jp.s3-website-us-east-1.amazonaws.com/epel-release || :
+yum -y install openvnet || :
+
+cat > /etc/openvnet/common.conf <<EOF
+registry {
+  adapter "redis"
+  host "${vnmgr}"
+  port 6379
+}
+
+db {
+  adapter "mysql2"
+  host "localhost"
+  database "vnet"
+  port 3306
+  user "root"
+  password ""
+}
 EOF
 
-rpm -Uvh http://dlc.wakame.axsh.jp.s3-website-us-east-1.amazonaws.com/epel-release
-yum -y install openvnet
+echo 1 > /proc/sys/net/ipv4/ip_forward
+cat /proc/sys/net/ipv4/ip_forward
+
+iptables --flush
+iptables -L

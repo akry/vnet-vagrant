@@ -7,47 +7,68 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "hansode/centos-6.5-x86_64"
 
-  config.vm.provider :virtualbox do |v, override|
-   # Disable the base shared folder, guest additions are unavailable.
-   #override.vm.synced_folder ".", "/vagrant", disabled: true
-   #v.gui = true
-   #v.customize ["modifyvm", :id, "--memory", "1024"]
-
-   # [Vagrant / virtualbox DNS 10.0.2.3 not working](http://serverfault.com/questions/453185/vagrant-virtualbox-dns-10-0-2-3-not-working)
-   #
-   # Enabling DNS proxy in NAT mode
-   # > VBoxManage modifyvm "VM name" --natdnsproxy1 on
-   # Using the host's resolver as a DNS proxy in NAT mode
-   # > VBoxManage modifyvm "VM name" --natdnshostresolver1 on
-   #
-   v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-  end
-
-  config.vm.provider :vmware_workstation do |v, override|
-   # Disable the base shared folder, guest additions are unavailable.
-    override.vm.synced_folder ".", "/vagrant", disabled: true
-   #v.gui = true
-   #v.vmx["memsize"]  = "2048"
-   #v.vmx["numvcpus"] = "2"
-    v.vmx["vhv.enable"] = "TRUE"
-
-   ## eth1
-   #v.vmx["ethernet1.present"]        = "TRUE"
-   #v.vmx["ethernet1.connectionType"] = "hostonly"
-   #v.vmx["ethernet1.virtualDev"]     = "e1000"
-   #v.vmx["ethernet1.wakeOnPcktRcv"]  = "FALSE"
-  end
-
   config.ssh.forward_agent = true
 
-  config.vm.provision "shell", path: "bootstrap.sh"     # Bootstrapping: package installation (phase:1)
-  config.vm.provision "shell", path: "config.d/base.sh" # Configuration: node-common          (phase:2)
 
- 1.times.each { |i|
-   name = sprintf("node%02d", i + 1)
-   config.vm.define "#{name}" do |node|
-     node.vm.hostname = "#{name}"
-     node.vm.provision "shell", path: "config.d/#{node.vm.hostname}.sh" # Configuration: node-specific (phase:2.5)
+  config.vm.define "vnmgr_vna1" do |node|
+    node.vm.hostname = "vnmgrvna1"
+    node.vm.provision "shell", path: "bootstrap.sh"     # Bootstrapping: package installation (phase:1)
+    node.vm.provision "shell", path: "config.d/base.sh" # Configuration: node-common          (phase:2)
+    node.vm.provision "shell", path: "config.d/vnmgr_vna1.sh" # Configuration: node-specific (phase:2.5)
+    # node.vm.network :private_network, ip: "10.100.0.2", virtualbox__intnet: "intnet1"
+    # node.vm.network :private_network, ip: "172.16.9.10", virtualbox__intnet: "intnet2"
+
+    node.vm.provider :virtualbox do |v, override|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet"]
+      v.customize ["modifyvm", :id, "--intnet2", "intnet2"]
+      v.customize ["modifyvm", :id, "--macaddress2", "080000000002"]
+      v.customize ["modifyvm", :id, "--nic3", "intnet"]
+      v.customize ["modifyvm", :id, "--intnet3", "intnet3"]
     end
- }
+  end
+
+  config.vm.define "vna2" do |node|
+    node.vm.hostname = "vna2"
+    node.vm.provision "shell", path: "bootstrap.sh"     # Bootstrapping: package installation (phase:1)
+    node.vm.provision "shell", path: "config.d/base.sh" # Configuration: node-common          (phase:2)
+    node.vm.provision "shell", path: "config.d/vna2.sh" # Configuration: node-specific (phase:2.5)
+    # node.vm.network :private_network, ip: "10.100.0.3", virtualbox__intnet: "intnet1"
+    # node.vm.network :private_network, ip: "172.16.9.11", virtualbox__intnet: "intnet2"
+    node.vm.provider :virtualbox do |v, override|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--nic2", "intnet"]
+      v.customize ["modifyvm", :id, "--intnet2", "intnet2"]
+      v.customize ["modifyvm", :id, "--macaddress2", "080000000003"]
+      v.customize ["modifyvm", :id, "--nic3", "intnet"]
+      v.customize ["modifyvm", :id, "--intnet3", "intnet3"]
+    end
+  end
+
+  # config.vm.define "router" do |node|
+  #   node.vm.hostname = "router"
+  #   node.vm.provision "shell", path: "config.d/router.sh" # Configuration: node-specific (phase:2.5)
+  #   node.vm.network :private_network, ip: "10.100.0.1", virtualbox__intnet: "intnet1"
+  #   node.vm.network :private_network, ip: "172.16.9.1", virtualbox__intnet: "intnet2"
+  #   node.vm.network :private_network, ip: "10.101.0.1", virtualbox__intnet: "intnet3"
+  # end
+
+  # config.vm.define "vna3" do |node|
+  #   node.vm.hostname = "vna3"
+  #   node.vm.provision "shell", path: "bootstrap.sh"     # Bootstrapping: package installation (phase:1)
+  #   node.vm.provision "shell", path: "config.d/base.sh" # Configuration: node-common          (phase:2)
+  #   node.vm.provision "shell", path: "config.d/vna3.sh" # Configuration: node-specific (phase:2.5)
+  #   node.vm.network :private_network, ip: "10.101.0.2", virtualbox__intnet: "intnet3"
+  #   node.vm.network :private_network, ip: "172.16.9.12", virtualbox__intnet: "intnet2"
+  # end
+
+  # config.vm.define "edge" do |node|
+  #   node.vm.hostname = "edge"
+  #   node.vm.provision "shell", path: "bootstrap.sh"     # Bootstrapping: package installation (phase:1)
+  #   node.vm.provision "shell", path: "config.d/base.sh" # Configuration: node-common          (phase:2)
+  #   node.vm.provision "shell", path: "config.d/vnmgr_vna1.sh" # Configuration: node-specific (phase:2.5)
+  #   node.vm.network :private_network, ip: "10.100.0.4", virtualbox__intnet: "intnet1"
+  #   node.vm.network :private_network, ip: "172.16.9.13", virtualbox__intnet: "intnet2"
+  #   node.vm.network :private_network, ip: "192.168.1.10", virtualbox__intnet: "intnet4"
+  # end
 end
