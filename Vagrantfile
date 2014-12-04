@@ -22,13 +22,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       v.customize ["modifyvm", :id, "--nic2", "intnet"]
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
-      v.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
+      v.customize ["modifyvm", :id, "--nictype2", "82540EM"]
       v.customize ["modifyvm", :id, "--intnet2", "intnet2"]
       v.customize ["modifyvm", :id, "--macaddress2", "080000000002"]
       v.customize ["modifyvm", :id, "--nic3", "intnet"]
       v.customize ["modifyvm", :id, "--intnet3", "intnet3"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
-      v.customize ["modifyvm", :id, "--nictype3", "Am79C973"]
+      v.customize ["modifyvm", :id, "--nictype3", "82540EM"]
     end
   end
 
@@ -43,13 +43,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       v.customize ["modifyvm", :id, "--nic2", "intnet"]
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
-      v.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
+      v.customize ["modifyvm", :id, "--nictype2", "82540EM"]
       v.customize ["modifyvm", :id, "--intnet2", "intnet2"]
       v.customize ["modifyvm", :id, "--macaddress2", "080000000003"]
       v.customize ["modifyvm", :id, "--nic3", "intnet"]
       v.customize ["modifyvm", :id, "--intnet3", "intnet3"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
-      v.customize ["modifyvm", :id, "--nictype3", "Am79C973"]
+      v.customize ["modifyvm", :id, "--nictype3", "82540EM"]
     end
   end
 
