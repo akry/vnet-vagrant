@@ -65,3 +65,5 @@ cat /proc/sys/net/ipv4/ip_forward
 
 iptables --flush
 iptables -L
+service iptables stop
+chkconfig iptables off
