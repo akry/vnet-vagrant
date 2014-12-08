@@ -6,8 +6,8 @@ OpenVNet installer over Vagrant
 Requirements
 ============
 
-virtualbox
-vagrant >= 1.6.5
+* virtualbox
+* vagrant >= 1.6.5
 
 Usage
 =====
