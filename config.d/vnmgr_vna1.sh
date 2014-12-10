@@ -142,7 +142,7 @@ http://${vnmgr}:9090/api/interfaces
 curl -s -X POST \
 --data-urlencode uuid="if-inst1" \
 --data-urlencode owner_datapath_uuid="dp-1" \
---data-urlencode mac_address="02:01:00:00:00:01" \
+--data-urlencode mac_address="52:54:FF:00:00:01" \
 --data-urlencode network_uuid="nw-vnet1" \
 --data-urlencode ipv4_address="10.200.0.10" \
 --data-urlencode port_name="inst1" \
@@ -151,7 +151,7 @@ http://${vnmgr}:9090/api/interfaces
 curl -s -X POST \
 --data-urlencode uuid="if-inst2" \
 --data-urlencode owner_datapath_uuid="dp-1" \
---data-urlencode mac_address="02:01:00:00:00:02" \
+--data-urlencode mac_address="52:54:FF:00:00:02" \
 --data-urlencode network_uuid="nw-vnet1" \
 --data-urlencode ipv4_address="10.200.0.11" \
 --data-urlencode port_name="inst2" \
@@ -191,7 +191,7 @@ lxc.network.type = veth
 lxc.network.flags = up
 lxc.network.veth.pair = inst1
 lxc.network.ipv4 = 10.200.0.10
-lxc.network.hwaddr = 02:01:00:00:00:01
+lxc.network.hwaddr = 52:54:FF:00:00:01
 lxc.rootfs = /var/lib/lxc/inst1/rootfs
 lxc.include = /usr/share/lxc/config/centos.common.conf
 lxc.arch = x86_64
@@ -204,7 +204,7 @@ lxc.network.type = veth
 lxc.network.flags = up
 lxc.network.veth.pair = inst2
 lxc.network.ipv4 = 10.200.0.11
-lxc.network.hwaddr = 02:01:00:00:00:02
+lxc.network.hwaddr = 52:54:FF:00:00:02
 lxc.rootfs = /var/lib/lxc/inst2/rootfs
 lxc.include = /usr/share/lxc/config/centos.common.conf
 lxc.arch = x86_64
