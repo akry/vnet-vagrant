@@ -31,6 +31,18 @@ network {
 }
 EOF
 
+cat > /etc/openvnet/vnmgr.conf <<EOF
+node {
+  id "vnmgr"
+  addr {
+    protocol "tcp"
+    host "${vnmgr}"
+    port 9102
+  }
+  plugins []
+}
+EOF
+
 cat > /etc/openvnet/webapi.conf <<EOF
 node {
   id "webapi"
