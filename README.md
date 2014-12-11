@@ -22,5 +22,5 @@ cd vnet-vagrant
 launch the vna node.
 
 ```
-vagrant up vnmgr_vna1
+vagrant up
 ```
