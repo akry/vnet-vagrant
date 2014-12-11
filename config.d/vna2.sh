@@ -112,7 +112,7 @@ http://${vnmgr}:9090/api/interfaces
 curl -s -X POST \
 --data-urlencode broadcast_mac_address="99:88:77:00:00:02" \
 --data-urlencode interface_uuid="if-dp2eth1" \
-http://${vnmgr}:9090/api/datapaths/dp-1/networks/nw-vnet1
+http://${vnmgr}:9090/api/datapaths/dp-2/networks/nw-vnet1
 
 curl -s -X POST \
 --data-urlencode broadcast_mac_address="99:88:66:00:00:02" \
