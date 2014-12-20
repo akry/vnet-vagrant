@@ -24,3 +24,9 @@ launch the vna node.
 ```
 vagrant up
 ```
+
+login the node by ssh
+
+```
+vagrant ssh vnmgr_vna1
+```
