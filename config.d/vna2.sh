@@ -74,51 +74,6 @@ service redis   stop || :
 chkconfig mysqld  off
 chkconfig redis   off
 
-curl -s -X POST \
---data-urlencode uuid=dp-2 \
---data-urlencode display_name="vna2" \
---data-urlencode dpid="0x0000bbbbbbbbbbbb" \
---data-urlencode node_id="vna2" \
-http://${vnmgr}:9090/api/datapaths
-
-curl -s -X POST \
---data-urlencode uuid="if-dp2eth1" \
---data-urlencode owner_datapath_uuid="dp-2" \
---data-urlencode mac_address="02:02:00:00:00:02" \
---data-urlencode network_uuid="nw-pub" \
---data-urlencode ipv4_address="10.100.0.3" \
---data-urlencode port_name="eth1" \
---data-urlencode mode="host" \
-http://${vnmgr}:9090/api/interfaces
-
-curl -s -X POST \
---data-urlencode uuid="if-inst3" \
---data-urlencode owner_datapath_uuid="dp-2" \
---data-urlencode mac_address="52:54:FF:00:00:03" \
---data-urlencode network_uuid="nw-vnet1" \
---data-urlencode ipv4_address="10.200.0.12" \
---data-urlencode port_name="inst3" \
-http://${vnmgr}:9090/api/interfaces
-
-curl -s -X POST \
---data-urlencode uuid="if-inst4" \
---data-urlencode owner_datapath_uuid="dp-2" \
---data-urlencode mac_address="52:54:FF:00:00:04" \
---data-urlencode network_uuid="nw-vnet1" \
---data-urlencode ipv4_address="10.200.0.13" \
---data-urlencode port_name="inst4" \
-http://${vnmgr}:9090/api/interfaces
-
-curl -s -X POST \
---data-urlencode broadcast_mac_address="99:88:77:00:00:02" \
---data-urlencode interface_uuid="if-dp2eth1" \
-http://${vnmgr}:9090/api/datapaths/dp-2/networks/nw-vnet1
-
-curl -s -X POST \
---data-urlencode broadcast_mac_address="99:88:66:00:00:02" \
---data-urlencode interface_uuid="if-dp2eth1" \
-http://${vnmgr}:9090/api/datapaths/dp-2/networks/nw-pub
-
 initctl start vnet-vna
 
 lxc-create -t centos -n inst3
