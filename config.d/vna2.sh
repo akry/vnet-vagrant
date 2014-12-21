@@ -43,7 +43,7 @@ OVS_EXTRA="
  set bridge     \${DEVICE} protocols=OpenFlow10,OpenFlow12,OpenFlow13 --
  set bridge     \${DEVICE} other_config:disable-in-band=true --
  set bridge     \${DEVICE} other-config:datapath-id=0000bbbbbbbbbbbb --
- set bridge     \${DEVICE} other-config:hwaddr=02:01:00:00:00:02 --
+ set bridge     \${DEVICE} other-config:hwaddr=02:02:00:00:00:02 --
  set-fail-mode  \${DEVICE} standalone --
  set-controller \${DEVICE} tcp:127.0.0.1:6633
 "
@@ -84,7 +84,7 @@ http://${vnmgr}:9090/api/datapaths
 curl -s -X POST \
 --data-urlencode uuid="if-dp2eth1" \
 --data-urlencode owner_datapath_uuid="dp-2" \
---data-urlencode mac_address="08:00:00:00:00:02" \
+--data-urlencode mac_address="02:02:00:00:00:02" \
 --data-urlencode network_uuid="nw-pub" \
 --data-urlencode ipv4_address="10.100.0.3" \
 --data-urlencode port_name="eth1" \
@@ -93,7 +93,7 @@ http://${vnmgr}:9090/api/interfaces
 
 curl -s -X POST \
 --data-urlencode uuid="if-inst3" \
---data-urlencode owner_datapath_uuid="dp-1" \
+--data-urlencode owner_datapath_uuid="dp-2" \
 --data-urlencode mac_address="52:54:FF:00:00:03" \
 --data-urlencode network_uuid="nw-vnet1" \
 --data-urlencode ipv4_address="10.200.0.12" \
@@ -102,7 +102,7 @@ http://${vnmgr}:9090/api/interfaces
 
 curl -s -X POST \
 --data-urlencode uuid="if-inst4" \
---data-urlencode owner_datapath_uuid="dp-1" \
+--data-urlencode owner_datapath_uuid="dp-2" \
 --data-urlencode mac_address="52:54:FF:00:00:04" \
 --data-urlencode network_uuid="nw-vnet1" \
 --data-urlencode ipv4_address="10.200.0.13" \

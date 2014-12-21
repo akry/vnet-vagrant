@@ -66,7 +66,7 @@ OVS_EXTRA="
  set bridge     \${DEVICE} protocols=OpenFlow10,OpenFlow12,OpenFlow13 --
  set bridge     \${DEVICE} other_config:disable-in-band=true --
  set bridge     \${DEVICE} other-config:datapath-id=0000aaaaaaaaaaaa --
- set bridge     \${DEVICE} other-config:hwaddr=02:01:00:00:00:01 --
+ set bridge     \${DEVICE} other-config:hwaddr=02:02:00:00:00:01 --
  set-fail-mode  \${DEVICE} standalone --
  set-controller \${DEVICE} tcp:127.0.0.1:6633
 "
@@ -144,7 +144,7 @@ http://${vnmgr}:9090/api/networks
 curl -s -X POST \
 --data-urlencode uuid="if-dp1eth1" \
 --data-urlencode owner_datapath_uuid="dp-1" \
---data-urlencode mac_address="08:00:00:00:00:01" \
+--data-urlencode mac_address="02:02:00:00:00:01" \
 --data-urlencode network_uuid="nw-pub" \
 --data-urlencode ipv4_address="10.100.0.2" \
 --data-urlencode port_name="eth1" \
