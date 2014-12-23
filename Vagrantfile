@@ -12,9 +12,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "vnmgr_vna1" do |node|
     node.vm.hostname = "vnmgrvna1"
-    node.vm.provision "shell", path: "bootstrap.sh"     # Bootstrapping: package installation (phase:1)
-    node.vm.provision "shell", path: "config.d/base.sh" # Configuration: node-common          (phase:2)
-    node.vm.provision "shell", path: "config.d/vnmgr_vna1.sh" # Configuration: node-specific (phase:2.5)
+    #node.vm.provision "shell", path: "bootstrap.sh"     # Bootstrapping: package installation (phase:1)
+    #node.vm.provision "shell", path: "config.d/base.sh" # Configuration: node-common          (phase:2)
+    #node.vm.provision "shell", path: "config.d/vnmgr_vna1.sh" # Configuration: node-specific (phase:2.5)
     # node.vm.network :private_network, ip: "10.100.0.2", virtualbox__intnet: "intnet1"
     # node.vm.network :private_network, ip: "172.16.9.10", virtualbox__intnet: "intnet2"
 
@@ -24,13 +24,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       v.customize ["modifyvm", :id, "--nic2", "intnet"]
       v.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
-      #v.customize ["modifyvm", :id, "--macaddress2", ""]
+      v.customize ["modifyvm", :id, "--macaddress2", "020200000001"]
       v.customize ["modifyvm", :id, "--intnet2", "intnet1"]
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
 
       v.customize ["modifyvm", :id, "--nic3", "intnet"]
       v.customize ["modifyvm", :id, "--nictype3", "Am79C973"]
-      #v.customize ["modifyvm", :id, "--macaddress3", ""]
       v.customize ["modifyvm", :id, "--intnet3", "intnet2"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
     end
@@ -50,13 +49,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       v.customize ["modifyvm", :id, "--nic2", "intnet"]
       v.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
-      #v.customize ["modifyvm", :id, "--macaddress2", ""]
+      v.customize ["modifyvm", :id, "--macaddress2", "020200000002"]
       v.customize ["modifyvm", :id, "--intnet2", "intnet1"]
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
 
       v.customize ["modifyvm", :id, "--nic3", "intnet"]
       v.customize ["modifyvm", :id, "--nictype3", "Am79C973"]
-      #v.customize ["modifyvm", :id, "--macaddress3", ""]
       v.customize ["modifyvm", :id, "--intnet3", "intnet2"]
       v.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
     end
