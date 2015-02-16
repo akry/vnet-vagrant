@@ -19,6 +19,7 @@ node {
   addr {
     protocol "tcp"
     host "172.16.9.11"
+    public ""
     port 9103
   }
 }

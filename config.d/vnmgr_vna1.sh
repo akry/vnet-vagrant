@@ -19,6 +19,7 @@ node {
   addr {
     protocol "tcp"
     host "${vnmgr}"
+    public ""
     port 9103
   }
 }
@@ -37,6 +38,7 @@ node {
   addr {
     protocol "tcp"
     host "${vnmgr}"
+    public ""
     port 9102
   }
   plugins []
@@ -49,6 +51,7 @@ node {
   addr {
     protocol "tcp"
     host "${vnmgr}"
+    public ""
     port 9101
   }
 }
