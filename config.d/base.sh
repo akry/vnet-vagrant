@@ -40,7 +40,7 @@ HOTPLUG=no
 EOF
 
 rpm -Uvh http://dlc.wakame.axsh.jp.s3-website-us-east-1.amazonaws.com/epel-release || :
-rpm -Uvh ftp://ftp.riken.go.jp/Linux/centos/6.6/os/x86_64/Packages/libyaml-0.1.3-1.4.el6.x86_64.rpm || :
+# rpm -Uvh ftp://ftp.riken.go.jp/Linux/centos/6.6/os/x86_64/Packages/libyaml-0.1.3-1.4.el6.x86_64.rpm || :
 yum -y install openvnet || :
 
 cat > /etc/openvnet/common.conf <<EOF

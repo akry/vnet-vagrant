@@ -13,6 +13,8 @@ vnet_root=/opt/axsh/openvnet
 PATH=${vnet_root}/ruby/bin:${PATH}
 vnmgr=172.16.9.10
 
+lxc_root_passwd=${lxc_root_passwd:-"root"}
+
 cat > /etc/openvnet/vna.conf <<EOF
 node {
   id "vna"
@@ -245,6 +247,16 @@ initctl start vnet-vna
 
 lxc-create -t centos -n inst1
 lxc-create -t centos -n inst2
+
+chroot_dirs="
+ /var/lib/lxc/inst1/rootfs
+ /var/lib/lxc/inst2/rootfs
+"
+for dir in ${chroot_dirs}; do
+chroot ${dir} /bin/bash -ex <<EOS
+  echo root:${lxc_root_passwd} | chpasswd
+EOS
+done
 
 cat > /var/lib/lxc/inst1/config <<EOF
 lxc.network.type = veth
