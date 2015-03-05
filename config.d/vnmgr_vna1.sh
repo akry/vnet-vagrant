@@ -243,6 +243,50 @@ curl -s -X POST \
 --data-urlencode interface_uuid="if-dp2eth1" \
 http://${vnmgr}:9090/api/datapaths/dp-2/networks/nw-pub
 
+curl -s -X POST \
+--data-urlencode uuid=dp-3 \
+--data-urlencode display_name="vna3" \
+--data-urlencode dpid="0x0000cccccccccccc" \
+--data-urlencode node_id="vna3" \
+http://${vnmgr}:9090/api/datapaths
+
+curl -s -X POST \
+--data-urlencode uuid="if-dp3eth1" \
+--data-urlencode owner_datapath_uuid="dp-3" \
+--data-urlencode mac_address="02:02:00:00:00:03" \
+--data-urlencode network_uuid="nw-pub" \
+--data-urlencode ipv4_address="10.101.0.4" \
+--data-urlencode port_name="eth1" \
+--data-urlencode mode="host" \
+http://${vnmgr}:9090/api/interfaces
+
+curl -s -X POST \
+--data-urlencode uuid="if-inst5" \
+--data-urlencode owner_datapath_uuid="dp-3" \
+--data-urlencode mac_address="52:54:FF:00:00:05" \
+--data-urlencode network_uuid="nw-vnet1" \
+--data-urlencode ipv4_address="10.200.0.14" \
+--data-urlencode port_name="inst5" \
+http://${vnmgr}:9090/api/interfaces
+
+curl -s -X POST \
+--data-urlencode uuid="if-inst6" \
+--data-urlencode owner_datapath_uuid="dp-4" \
+--data-urlencode mac_address="52:54:FF:00:00:06" \
+--data-urlencode network_uuid="nw-vnet1" \
+--data-urlencode ipv4_address="10.200.0.15" \
+--data-urlencode port_name="inst6" \
+http://${vnmgr}:9090/api/interfaces
+
+curl -s -X POST \
+--data-urlencode broadcast_mac_address="99:88:77:00:00:03" \
+--data-urlencode interface_uuid="if-dp3eth1" \
+http://${vnmgr}:9090/api/datapaths/dp-3/networks/nw-vnet1
+
+curl -s -X POST \
+--data-urlencode broadcast_mac_address="99:88:66:00:00:03" \
+--data-urlencode interface_uuid="if-dp3eth1" \
+http://${vnmgr}:9090/api/datapaths/dp-3/networks/nw-pub
 initctl start vnet-vna
 
 lxc-create -t centos -n inst1
