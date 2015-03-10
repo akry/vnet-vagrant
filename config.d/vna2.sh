@@ -15,6 +15,8 @@ vnmgr=172.16.9.10
 
 lxc_root_passwd=${lxc_root_passwd:-"root"}
 
+yum -y install openvnet-vna
+
 cat > /etc/openvnet/vna.conf <<EOF
 node {
   id "vna2"
@@ -70,12 +72,6 @@ ifdown eth1
 ifdown eth2
 ifup eth1 || :
 ifup eth2 || :
-
-service mysqld  stop || :
-service redis   stop || :
-
-chkconfig mysqld  off
-chkconfig redis   off
 
 initctl start vnet-vna
 
