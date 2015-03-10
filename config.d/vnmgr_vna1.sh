@@ -15,6 +15,8 @@ vnmgr=172.16.9.10
 
 lxc_root_passwd=${lxc_root_passwd:-"root"}
 
+yum -y install openvnet-vna openvnet-vnmgr openvnet-webapi
+
 cat > /etc/openvnet/vna.conf <<EOF
 node {
   id "vna"
@@ -139,6 +141,14 @@ curl -s -X POST \
 http://${vnmgr}:9090/api/networks
 
 curl -s -X POST \
+--data-urlencode uuid=nw-pub2 \
+--data-urlencode display_name="nw-pub2" \
+--data-urlencode ipv4_network="10.101.0.0" \
+--data-urlencode ipv4_prefix="24" \
+--data-urlencode network_mode="physical" \
+http://${vnmgr}:9090/api/networks
+
+curl -s -X POST \
 --data-urlencode uuid=nw-vnet1 \
 --data-urlencode display_name="nw-vnet1" \
 --data-urlencode ipv4_network="10.200.0.0" \
@@ -254,7 +264,7 @@ curl -s -X POST \
 --data-urlencode uuid="if-dp3eth1" \
 --data-urlencode owner_datapath_uuid="dp-3" \
 --data-urlencode mac_address="02:02:00:00:00:03" \
---data-urlencode network_uuid="nw-pub" \
+--data-urlencode network_uuid="nw-pub2" \
 --data-urlencode ipv4_address="10.101.0.4" \
 --data-urlencode port_name="eth1" \
 --data-urlencode mode="host" \
@@ -271,7 +281,7 @@ http://${vnmgr}:9090/api/interfaces
 
 curl -s -X POST \
 --data-urlencode uuid="if-inst6" \
---data-urlencode owner_datapath_uuid="dp-4" \
+--data-urlencode owner_datapath_uuid="dp-3" \
 --data-urlencode mac_address="52:54:FF:00:00:06" \
 --data-urlencode network_uuid="nw-vnet1" \
 --data-urlencode ipv4_address="10.200.0.15" \
