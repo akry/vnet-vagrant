@@ -83,7 +83,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       v.customize ["modifyvm", :id, "--nic2", "intnet"]
       v.customize ["modifyvm", :id, "--nictype2", "82540EM"]
-      v.customize ["modifyvm", :id, "--macaddress2", "020200000002"]
+      v.customize ["modifyvm", :id, "--macaddress2", "020200000003"]
       v.customize ["modifyvm", :id, "--intnet2", "intnet3"]
       v.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
 
