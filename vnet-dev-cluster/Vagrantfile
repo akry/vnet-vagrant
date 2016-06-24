@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+#
+Vagrant.configure("2") do |config|
+  config.vm.define :vnmgr do |vnmgr|
+    vnmgr.vm.box = "bmcgonigle/centos68"
+    vnmgr.vm.provider :libvirt do |domain|
+      domain.memory = 2048
+      domain.cpus = 1
+      domain.nested = true
+    end
+    vnmgr.vm.provision "shell", path: "install_consul.sh"
+  end
+
+  config.vm.define :vna do |vna|
+    vna.vm.box = "bmcgonigle/centos68"
+    vna.vm.provider :libvirt do |domain|
+      domain.memory = 2048
+      domain.cpus = 1
+      domain.nested = true
+    end
+    vna.vm.provision "shell", path: "install_consul.sh"
+  end
+end
